@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Centre | Support CRM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: "class" };
+    
+    // Auto sync light/dark mode instantly before page render
+    const savedTheme = localStorage.getItem("support-crm-theme");
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  </script>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-800 transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100">
+  <header class="border-b border-slate-200 bg-white transition-colors duration-200 dark:border-slate-800 dark:bg-slate-900">
+    <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 sm:px-6">
+      <div>
+        <h1 class="text-xl font-bold text-slate-900 dark:text-white">Support CRM</h1>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Create a support ticket</p>
+      </div>
+
+      <a href="/" class="text-sm font-semibold text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">
+        &larr; Back to dashboard
+      </a>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <section class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition-colors duration-200 dark:bg-slate-900 dark:ring-slate-800 sm:p-8">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">How can we help?</h2>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        Tell us about the problem and our support team will review it.
+      </p>
+
+      <form id="create-ticket-form" class="mt-8 space-y-5">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="customer_name" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Your name
+            </label>
+            <input
+              id="customer_name"
+              name="customer_name"
+              type="text"
+              required
+              minlength="2"
+              maxlength="100"
+              placeholder="e.g. Aarav Sharma"
+              class="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-950"
+            />
+          </div>
+
+          <div>
+            <label for="customer_email" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Email address
+            </label>
+            <input
+              id="customer_email"
+              name="customer_email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              class="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-950"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="subject" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+            Subject
+          </label>
+          <input
+            id="subject"
+            name="subject"
+            type="text"
+            required
+            minlength="3"
+            maxlength="200"
+            placeholder="Briefly describe your issue"
+            class="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-950"
+          />
+        </div>
+
+        <div>
+          <label for="description" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            minlength="10"
+            rows="6"
+            placeholder="Please include any helpful details about the problem..."
+            class="w-full resize-y rounded-lg border border-slate-300 bg-transparent px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-950"
+          ></textarea>
+        </div>
+
+        <p id="form-message" class="hidden rounded-lg px-4 py-3 text-sm"></p>
+
+        <button
+          id="submit-button"
+          type="submit"
+          class="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700"
+        >
+          Submit ticket
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', path='js/create-ticket.js') }}"></script>
+</body>
+</html>

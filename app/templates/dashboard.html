@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support CRM | Pawan Shinde</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: "class" };
+  </script>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-800 transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100">
+  <header class="border-b border-slate-200 bg-white transition-colors duration-200 dark:border-slate-800 dark:bg-slate-900">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Support CRM</h1>
+          <span class="rounded-md bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+            Agent workspace
+          </span>
+        </div>
+        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          Customer Support Ticket Management by Pawan Shinde
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          id="theme-toggle"
+          type="button"
+          class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+        >
+          Dark mode
+        </button>
+
+        <a
+          href="/tickets/new"
+          class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-md"
+        >
+          + Create Ticket
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <section class="mb-8 grid gap-4 sm:grid-cols-3">
+      <div class="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900 dark:ring-slate-800">
+        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Tickets</p>
+        <p class="mt-2 text-3xl font-bold text-slate-900 dark:text-white">0</p>
+      </div>
+
+      <div class="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900 dark:ring-slate-800">
+        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Open Tickets</p>
+        <p class="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
+      </div>
+
+      <div class="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900 dark:ring-slate-800">
+        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Closed Tickets</p>
+        <p class="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">0</p>
+      </div>
+    </section>
+
+    <section class="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+      <div class="mb-5 flex flex-col gap-3 sm:flex-row">
+        <input
+          type="search"
+          placeholder="Search by ticket ID, customer, email, or subject..."
+          class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+        />
+
+        <select class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm text-slate-800 outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100">
+          <option value="">All statuses</option>
+          <option value="open">Open</option>
+          <option value="in-progress">In Progress</option>
+          <option value="closed">Closed</option>
+        </select>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-slate-200 text-xs uppercase text-slate-500 dark:border-slate-800 dark:text-slate-400">
+            <tr>
+              <th class="px-4 py-3">Ticket ID</th>
+              <th class="px-4 py-3">Customer</th>
+              <th class="px-4 py-3">Subject</th>
+              <th class="px-4 py-3">Status</th>
+              <th class="px-4 py-3">Created</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td colspan="5" class="px-4 py-12 text-center text-slate-500 dark:text-slate-400">
+                No tickets yet. Create your first support ticket.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+    <div class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-5 text-center text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:text-left dark:text-slate-400">
+      <p>&copy; 2026 Pawan Shinde. All rights reserved.</p>
+      <p>Proprietary and confidential software. Unauthorized copying, distribution, or use is prohibited.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', path='js/dashboard.js') }}"></script>
+</body>
+</html>
