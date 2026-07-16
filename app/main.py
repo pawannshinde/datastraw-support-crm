@@ -28,10 +28,10 @@ def seed_default_user():
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+# FIXED: Removed the extra "/api" prefix so it matches your frontend perfectly
 app.include_router(tickets.router)
 
 templates = Jinja2Templates(directory="app/templates")
-
 
 @app.get("/")
 def welcome_page(request: Request):
@@ -41,7 +41,6 @@ def welcome_page(request: Request):
         name="welcome.html",
     )
 
-
 @app.get("/login")
 def login_page(request: Request):
     """Secure Agent Portal Authentication Gate"""
@@ -49,7 +48,6 @@ def login_page(request: Request):
         request=request,
         name="login.html",
     )
-
 
 @app.get("/dashboard")
 def agent_dashboard(request: Request):
@@ -59,7 +57,6 @@ def agent_dashboard(request: Request):
         name="dashboard.html",
     )
 
-
 @app.get("/tickets/new")
 def create_ticket_page(request: Request):
     """Customer Self-Service Issue Filing Form"""
@@ -68,10 +65,9 @@ def create_ticket_page(request: Request):
         name="ticket_form.html",
     )
 
-
 @app.get("/tickets/{ticket_number}")
 def ticket_detail_page(request: Request, ticket_number: str):
-    """Secure Agent Core Workspace Workspace Detail Panel"""
+    """Secure Agent Core Workspace Detail Panel"""
     return templates.TemplateResponse(
         request=request,
         name="ticket-detail.html",

@@ -8,27 +8,22 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 from app.dependencies import get_db
 
+# Prefix handles the base route perfectly
 router = APIRouter(prefix="/api/tickets", tags=["Tickets"])
-
 
 class StatusUpdate(BaseModel):
     status: str
-
 
 class CustomerUpdate(BaseModel):
     customer_name: str
     customer_email: str
 
-
 class LoginRequest(BaseModel):
     username: str
     password: str
 
-
-# Schema for incoming persistent comment submissions
 class NoteCreate(BaseModel):
     note_text: str
-
 
 def ticket_to_dict(ticket: models.Ticket) -> dict:
     return {
@@ -50,7 +45,6 @@ def ticket_to_dict(ticket: models.Ticket) -> dict:
         ] if ticket.notes else []
     }
 
-
 @router.post("/auth/login")
 def verify_agent_credentials(data: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.username == data.username).first()
@@ -58,7 +52,8 @@ def verify_agent_credentials(data: LoginRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid credential records")
     return {"message": "Authentication successful", "redirect": "/dashboard"}
 
-
+# Made resilient to accept both "/api/tickets" and "/api/tickets/"
+@router.post("", status_code=201)
 @router.post("/", status_code=201)
 def create_ticket(
     ticket_data: schemas.TicketCreate,
@@ -75,7 +70,8 @@ def create_ticket(
 
     return ticket_to_dict(ticket)
 
-
+# Made resilient to accept both "/api/tickets" and "/api/tickets/"
+@router.get("")
 @router.get("/")
 def list_tickets(
     search: str = "",
@@ -102,7 +98,6 @@ def list_tickets(
     tickets = query.order_by(models.Ticket.created_at.desc()).all()
     return [ticket_to_dict(t) for t in tickets]
 
-
 @router.get("/{ticket_number}")
 def get_ticket(ticket_number: str, db: Session = Depends(get_db)):
     ticket = (
@@ -115,7 +110,6 @@ def get_ticket(ticket_number: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Ticket not found")
 
     return ticket_to_dict(ticket)
-
 
 @router.put("/{ticket_number}/status")
 def update_ticket_status(
@@ -142,7 +136,6 @@ def update_ticket_status(
 
     return ticket_to_dict(ticket)
 
-
 @router.put("/{ticket_number}/customer")
 def update_ticket_customer(
     ticket_number: str,
@@ -166,8 +159,6 @@ def update_ticket_customer(
 
     return ticket_to_dict(ticket)
 
-
-# New Route: Save internal workspace activity comments persistently
 @router.post("/{ticket_number}/notes")
 def add_ticket_note(
     ticket_number: str, 
